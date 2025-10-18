@@ -5,7 +5,53 @@
  * - Certificates alternating slide-in
  * - Education opposing animations
  * - Contact form submission to backend
+ * - Mobile hamburger menu toggle
  */
+
+// Hamburger menu toggle for mobile
+document.addEventListener('DOMContentLoaded', function() {
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      navLinks.classList.toggle('open');
+      
+      // Change icon when menu is open
+      const icon = hamburger.querySelector('i');
+      if (navLinks.classList.contains('open')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // Close menu when clicking on a link
+    const links = navLinks.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', function() {
+        navLinks.classList.remove('open');
+        const icon = hamburger.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+        navLinks.classList.remove('open');
+        const icon = hamburger.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+  }
+});
+
 // simple left-to-right reveal
 (function(){
   const slide = document.getElementById('hero');

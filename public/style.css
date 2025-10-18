@@ -82,6 +82,18 @@ body{
   width:100%;
 }
 
+/* Hamburger menu styles */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--accent-mint);
+  font-size: 1.8rem;
+  cursor: pointer;
+  z-index: 1100;
+  padding: 0.5rem;
+}
+
 .slide{
   position:relative;
   display:flex;
@@ -584,14 +596,57 @@ h2{font-size:2.5rem;margin:0 0 2rem;color:var(--accent-mint);text-align:center}
   #contact{padding:50px 16px}
   .contact-title{font-size:28px}
   .contact-info-card,.contact-form-card{padding:25px}
-  #navbar{padding:0.8rem 1rem;flex-direction:column;gap:1rem}
+  #navbar{padding:0.8rem 1rem}
   #navbar .logo{font-size:1.2rem}
-  #navbar .nav-links{
-    flex-direction:column;
-    gap:0.8rem;
-    text-align:center;
-    width:100%;
+  
+  /* Hamburger menu for mobile */
+  .hamburger {
+    display: block;
   }
+  
+  #navbar .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(15,32,39,0.98);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  }
+  
+  #navbar .nav-links.open {
+    max-height: 400px;
+    opacity: 1;
+    padding: 1rem 0;
+  }
+  
+  #navbar .nav-links li {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,255,153,0.1);
+  }
+  
+  #navbar .nav-links li:last-child {
+    border-bottom: none;
+  }
+  
+  #navbar .nav-links a {
+    display: block;
+    padding: 1rem;
+    width: 100%;
+  }
+  
+  #navbar .nav-links a::after {
+    display: none;
+  }
+  
   .slide{padding:80px 20px 40px}
   .title{font-size:2rem}
   .roles{font-size:1rem}
