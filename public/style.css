@@ -551,6 +551,7 @@ h2{font-size:2.5rem;margin:0 0 2rem;color:var(--accent-mint);text-align:center}
 
 /* Single column already; keep padding adjustments via existing global media queries if needed */
 
+/* Tablet breakpoint */
 @media (max-width:980px){
   .hero-grid,.left-photo,.gallery-grid{grid-template-columns:1fr}
   .hero-text{text-align:center}
@@ -564,13 +565,56 @@ h2{font-size:2.5rem;margin:0 0 2rem;color:var(--accent-mint);text-align:center}
   .cards{grid-template-columns:1fr 1fr}
   .ring-grid{grid-template-columns:repeat(3,1fr)}
   .contact-grid{grid-template-columns:1fr}
+  #navbar{padding:1rem 1.5rem}
+  #navbar .nav-links{gap:1.5rem;font-size:0.9rem}
+  .slide{padding:100px 30px 60px}
+  .title{font-size:2.5rem}
+  .roles{font-size:1.1rem}
+  h2{font-size:2rem}
+  .skills-box{padding:60px 40px}
+  #education .left-photo{grid-template-columns:1fr;gap:30px}
+  #education .side-photo{max-width:100%;height:280px}
+  #education .edu-photo-container{min-height:280px}
 }
+
+/* Mobile breakpoint */
 @media (max-width:640px){
   .cards{grid-template-columns:1fr}
-  .ring-grid{grid-template-columns:repeat(2,1fr)}
+  .ring-grid{grid-template-columns:repeat(2,1fr);gap:32px 20px}
   #contact{padding:50px 16px}
   .contact-title{font-size:28px}
   .contact-info-card,.contact-form-card{padding:25px}
+  #navbar{padding:0.8rem 1rem;flex-direction:column;gap:1rem}
+  #navbar .logo{font-size:1.2rem}
+  #navbar .nav-links{
+    flex-direction:column;
+    gap:0.8rem;
+    text-align:center;
+    width:100%;
+  }
+  .slide{padding:80px 20px 40px}
+  .title{font-size:2rem}
+  .roles{font-size:1rem}
+  .lead{font-size:1rem}
+  h2{font-size:1.8rem}
+  .skills-box{padding:40px 20px}
+  .ring{--s:110px}
+  .ring span{font-size:13px;bottom:-45px}
+  .cert-item{padding:18px 24px;font-size:15px}
+  .card-dark{padding:24px}
+  .card-cream{padding:20px}
+  .invite-card{font-size:40px;padding:32px;width:90vw}
+  .contact-item{flex-direction:column;align-items:flex-start;gap:12px}
+  .contact-icon{margin-top:0}
+}
+
+/* Extra small devices */
+@media (max-width:400px){
+  .ring-grid{grid-template-columns:1fr;max-width:200px;margin:0 auto}
+  .title{font-size:1.7rem}
+  h2{font-size:1.5rem}
+  .cert-item{font-size:14px;padding:16px 20px}
+  .invite-card{font-size:32px;padding:24px}
 }
 
 /* ===== INVITE Card (Certificates page snippet) ===== */
