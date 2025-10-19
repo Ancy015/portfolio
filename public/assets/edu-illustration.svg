@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Education Illustration</title>
+  <desc id="desc">Minimal illustration of a graduation cap, book, and abstract glow using the site's dark teal and mint palette.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f2027"/>
+      <stop offset="0.55" stop-color="#203a43"/>
+      <stop offset="1" stop-color="#2c5364"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+      <stop offset="0" stop-color="rgba(0,255,153,0.55)"/>
+      <stop offset="0.6" stop-color="rgba(0,255,153,0.18)"/>
+      <stop offset="1" stop-color="rgba(0,255,153,0)"/>
+    </radialGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <ellipse cx="400" cy="340" rx="260" ry="120" fill="url(#glow)"/>
+  <g fill="none" stroke="#00ff99" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Graduation cap -->
+    <path d="M200 240l200-70 200 70-200 70-200-70z" fill="rgba(0,255,153,0.08)"/>
+    <path d="M240 270v90c60 45 260 45 320 0v-90" fill="rgba(0,255,153,0.06)"/>
+    <path d="M600 245v120"/>
+    <circle cx="600" cy="365" r="10" fill="#00ff99"/>
+    <!-- Book -->
+    <path d="M240 390c80-40 160-40 240 0M240 390v80c80-40 160-40 240 0v-80" fill="rgba(0,255,153,0.05)"/>
+  </g>
+  <!-- Decorative dots -->
+  <g fill="#00ff99" opacity="0.9">
+    <circle cx="110" cy="120" r="3"/>
+    <circle cx="690" cy="140" r="3"/>
+    <circle cx="150" cy="520" r="2"/>
+    <circle cx="740" cy="480" r="2"/>
+  </g>
+</svg>

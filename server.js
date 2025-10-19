@@ -1,3 +1,4 @@
+
 /**
  * Simple Express server for the portfolio site.
  * - Serves static files from /public
@@ -77,7 +78,43 @@ app.post('/api/contact', async (req, res) => {
 
     const previewUrl = nodemailer.getTestMessageUrl(info) || undefined;
     console.log('✉️  Sent message ID:', info.messageId, previewUrl ? `Preview: ${previewUrl}` : '');
-    res.json({ ok: true, id: info.messageId, previewUrl });
+
+    // Optional: Auto-reply (acknowledgement) to the sender
+    let autoReplyOk = false;
+    if (process.env.AUTO_REPLY === 'true') {
+      try {
+        const replyFromName = process.env.REPLY_FROM_NAME || 'Ancy Portfolio';
+        const replySubjectTpl = process.env.REPLY_SUBJECT || 'Thanks {{name}} — I received your message';
+        const replyMessageTpl = process.env.REPLY_MESSAGE || (
+          'Hi {{name}},\n\n'
+          + 'Thanks for reaching out! I\'ve received your message and will get back to you soon.\n\n'
+          + 'Best regards,\nAncy'
+        );
+
+        const applyTpl = (tpl) => tpl.replace(/\{\{\s*name\s*\}\}/g, name);
+        const replySubject = applyTpl(replySubjectTpl);
+        const replyText = applyTpl(replyMessageTpl);
+        const replyHtml = `<div style="font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#111">
+            <p>${replyText.replace(/\n/g, '<br>')}</p>
+          </div>`;
+
+        const replyInfo = await transporter.sendMail({
+          from: `${replyFromName} <${process.env.SMTP_USER || 'no-reply@example.com'}>`,
+          to: email,
+          subject: replySubject,
+          text: replyText,
+          html: replyHtml,
+        });
+
+        const replyPreview = nodemailer.getTestMessageUrl(replyInfo) || undefined;
+        console.log('↩️  Auto-reply sent:', replyInfo.messageId, replyPreview ? `Preview: ${replyPreview}` : '');
+        autoReplyOk = true;
+      } catch (e) {
+        console.warn('⚠️  Auto-reply failed:', e && e.message ? e.message : e);
+      }
+    }
+
+    res.json({ ok: true, id: info.messageId, previewUrl, autoReplyOk });
   } catch (err) {
     console.error('❌ Contact error:', err);
     const safeMsg = process.env.NODE_ENV === 'production'

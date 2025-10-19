@@ -1,0 +1,6 @@
+# Ignore CSS files - do not format
+*.css
+public/style.css
+
+# Ignore node_modules
+node_modules/

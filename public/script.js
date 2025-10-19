@@ -1,37 +1,23 @@
-// Mobile menu toggle/**
+/**
+ * Frontend interactions for the portfolio:
+ * - Mobile hamburger menu toggle
+ * - Hero text reveal + typing effect
+ * - Animated skill rings
+ * - Certificates alternating slide-in
+ * - Education opposing animations
+ * - Contact form submission to backend
+ */
 
-document.addEventListener('DOMContentLoaded',()=>{ * Frontend interactions for the portfolio:
+// ===========================
+// Hamburger Menu Toggle
+// ===========================
+document.addEventListener('DOMContentLoaded', function() {
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
 
-  const hamburger=document.getElementById('hamburger'); * - Hero text reveal + typing effect
-
-  const navLinks=document.getElementById('navLinks'); * - Animated skill rings
-
-  if(hamburger&&navLinks){ * - Certificates alternating slide-in
-
-    hamburger.addEventListener('click',()=>{ * - Education opposing animations
-
-      navLinks.classList.toggle('open'); * - Contact form submission to backend
-
-      const icon=hamburger.querySelector('i'); * - Mobile hamburger menu toggle
-
-      if(icon){ icon.classList.toggle('fa-bars'); icon.classList.toggle('fa-times'); } */
-
-    });
-
-    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{// Hamburger menu toggle for mobile
-
-      navLinks.classList.remove('open');document.addEventListener('DOMContentLoaded', function() {
-
-      const icon=hamburger.querySelector('i');  const hamburger = document.getElementById('hamburger');
-
-      if(icon){ icon.classList.add('fa-bars'); icon.classList.remove('fa-times'); }  const navLinks = document.getElementById('navLinks');
-
-    }));  
-
-  }  if (hamburger && navLinks) {
-
-});    hamburger.addEventListener('click', function(e) {
-
+  if (hamburger && navLinks) {
+    // Toggle menu on hamburger click
+    hamburger.addEventListener('click', function(e) {
       e.stopPropagation();
       navLinks.classList.toggle('open');
       
@@ -69,41 +55,51 @@ document.addEventListener('DOMContentLoaded',()=>{ * Frontend interactions for t
   }
 });
 
-// simple left-to-right reveal
-(function(){
+// ===========================
+// Hero Section Animations
+// ===========================
+(function() {
   const slide = document.getElementById('hero');
+  if (!slide) return;
+  
   const text = slide.querySelector('.hero-text');
   const mock = slide.querySelector('.mockup');
   const rolesEl = slide.querySelector('.roles');
 
-  function prep(el, dx=40, delay=0){
+  function prep(el, dx = 40, delay = 0) {
+    if (!el) return;
     el.style.opacity = 0;
     el.style.transform = `translateX(${dx}px)`;
     el.style.transition = `transform .7s cubic-bezier(.2,.8,.2,1) ${delay}ms, opacity .7s ${delay}ms`;
   }
-  function show(el){
-    requestAnimationFrame(()=>{ 
+
+  function show(el) {
+    if (!el) return;
+    requestAnimationFrame(() => { 
       el.style.opacity = 1; 
       el.style.transform = 'translateX(0)'; 
     });
   }
+
   prep(text, 50, 0); 
   if (mock) prep(mock, 60, 120);
 
-  const io = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        show(text); if (mock) show(mock);
-        // typing animation for roles
-        if (rolesEl){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        show(text);
+        if (mock) show(mock);
+        
+        // Typing animation for roles
+        if (rolesEl) {
           const full = rolesEl.textContent.trim();
           rolesEl.textContent = '';
           rolesEl.classList.add('typing');
           let i = 0;
           const speed = 60; // ms per char
           const type = () => {
-            if (i <= full.length){
-              rolesEl.textContent = full.slice(0,i);
+            if (i <= full.length) {
+              rolesEl.textContent = full.slice(0, i);
               i++;
               setTimeout(type, speed);
             } else {
@@ -112,14 +108,18 @@ document.addEventListener('DOMContentLoaded',()=>{ * Frontend interactions for t
           };
           type();
         }
-        io.disconnect(); // one-time, one-direction
+        io.disconnect();
       }
     });
-  },{threshold:.35});
+  }, { threshold: 0.35 });
+
   io.observe(slide);
 })();
-// Animated skill rings
-(function(){
+
+// ===========================
+// Animated Skill Rings
+// ===========================
+(function() {
   const skillsSection = document.getElementById('skills');
   if (!skillsSection) return;
   
@@ -186,10 +186,13 @@ document.addEventListener('DOMContentLoaded',()=>{ * Frontend interactions for t
   });
 })();
 
-// Alternating slide-in for Certificates bars
-(function(){
+// ===========================
+// Certificates Alternating Slide-in
+// ===========================
+(function() {
   const section = document.getElementById('certificates');
   if (!section) return;
+  
   const items = section.querySelectorAll('.cert-item');
   if (!items.length) return;
 
@@ -221,12 +224,13 @@ document.addEventListener('DOMContentLoaded',()=>{ * Frontend interactions for t
   io.observe(section);
 })();
 
-// Projects: removed extra reveal motion per user request
-
-// Education section: image from left, text from right
-(function(){
+// ===========================
+// Education Section Animations
+// ===========================
+(function() {
   const section = document.getElementById('education');
   if (!section) return;
+  
   const photo = section.querySelector('.side-photo');
   const card = section.querySelector('.card-dark');
   if (!photo || !card) return;
@@ -240,7 +244,7 @@ document.addEventListener('DOMContentLoaded',()=>{ * Frontend interactions for t
       if (entry.isIntersecting) {
         // Remove the hidden class to trigger the animation
         setTimeout(() => photo.classList.remove('is-hidden'), 0);
-        setTimeout(() => card.classList.remove('is-hidden'), 800); // wait for image animation to mostly complete
+        setTimeout(() => card.classList.remove('is-hidden'), 200);
         io.disconnect();
       }
     });
@@ -249,36 +253,47 @@ document.addEventListener('DOMContentLoaded',()=>{ * Frontend interactions for t
   io.observe(section);
 })();
 
-// Contact form submission to backend
-(function(){
+// ===========================
+// Contact Form Submission (EmailJS)
+// ===========================
+(function() {
   const form = document.getElementById('contactForm');
   if (!form) return;
-  form.addEventListener('submit', async (e) => {
+
+  // GitHub Copilot, integrate EmailJS to send messages from this contact form.
+  // Steps:
+  // 1. Import emailjs from '@emailjs/browser' (loaded via CDN below).
+  // 2. When the form is submitted, use emailjs.sendForm() with service ID, template ID, and public key.
+  // 3. Show an alert "Message sent successfully!" on success and "Failed to send message" on error.
+  // 4. Reset the form after sending.
+  // Email destination: ancy15106@gmail.com
+
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
+    
     const btn = form.querySelector('button[type="submit"]');
     const orig = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    const data = Object.fromEntries(new FormData(form).entries());
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+
+    // Replace these with your EmailJS credentials:
+    const SERVICE_ID = 'YOUR_SERVICE_ID';      // Get from EmailJS dashboard
+    const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';    // Get from EmailJS dashboard
+    const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';      // Get from EmailJS dashboard
+
+    // Send email using EmailJS
+    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form, PUBLIC_KEY)
+      .then(() => {
+        alert('✅ Message sent successfully! I\'ll get back to you soon.');
+        form.reset();
+      })
+      .catch((error) => {
+        console.error('EmailJS Error:', error);
+        alert('❌ Failed to send message. Please try again or email me directly at ancy15106@gmail.com');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = orig;
       });
-      const out = await res.json();
-      if (!res.ok || !out.ok) throw new Error(out.error || 'Failed to send');
-      alert('Thanks! Your message has been sent.');
-      if (out.previewUrl) {
-        console.log('Preview (Ethereal):', out.previewUrl);
-      }
-      form.reset();
-    } catch (err) {
-      console.error(err);
-      alert('Sorry, your message could not be sent. ' + (err.message ? `(${err.message})` : 'Please try again later.'));
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = orig;
-    }
   });
 })();
